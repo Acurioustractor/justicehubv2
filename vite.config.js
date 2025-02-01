@@ -15,4 +15,8 @@ export default defineConfig({
     include: ['leaflet', 'react-leaflet']
   },
   base: '/justicehub/',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+  }
 }) 
