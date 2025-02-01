@@ -13,5 +13,6 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['leaflet', 'react-leaflet']
-  }
+  },
+  base: '/justicehub/',
 }) 
