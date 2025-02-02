@@ -1,43 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import Navigation from './components/Navigation';
+import AppRoutes from './routes';
 import { DarkModeProvider } from './context/DarkModeContext';
-import Header from './components/Header';
-import HomePage from './pages/HomePage';
-import VisionPage from './pages/VisionPage';
-import MapPage from './pages/MapPage';
-import PitchPage from './pages/PitchPage';
-import FeaturesPage from './pages/FeaturesPage';
-import DocsPage from './pages/DocsPage';
-
-// Create a wrapper component to conditionally render the header
-const AppContent = () => {
-  const location = useLocation();
-  const isDocsPage = location.pathname.startsWith('/docs');
-
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      {!isDocsPage && <Header />}
-      <div className={!isDocsPage ? 'pt-16' : ''}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/vision" element={<VisionPage />} />
-          <Route path="/map" element={<MapPage />} />
-          <Route path="/pitch" element={<PitchPage />} />
-          <Route path="/features" element={<FeaturesPage />} />
-          <Route path="/docs/*" element={<DocsPage />} />
-        </Routes>
-      </div>
-    </div>
-  );
-};
+import { AccessibilityProvider } from './context/AccessibilityContext';
+import { AppProvider } from './store/AppContext';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   return (
-    <DarkModeProvider>
-      <Router>
-        <AppContent />
-      </Router>
-    </DarkModeProvider>
+    <ErrorBoundary>
+      <AppProvider>
+        <DarkModeProvider>
+          <AccessibilityProvider>
+            <div className="min-h-screen bg-white dark:bg-gray-900">
+              <Navigation />
+              <main className="pt-16">
+                <AppRoutes />
+              </main>
+            </div>
+          </AccessibilityProvider>
+        </DarkModeProvider>
+      </AppProvider>
+    </ErrorBoundary>
   );
 }
 

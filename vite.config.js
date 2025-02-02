@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
@@ -8,7 +9,7 @@ export default defineConfig({
     hmr: {
       overlay: false
     },
-    port: 5179,
+    port: 5173,
     open: true
   },
   optimizeDeps: {
@@ -20,8 +21,14 @@ export default defineConfig({
     assetsDir: 'assets',
     rollupOptions: {
       input: {
-        main: './index.html',
+        main: path.resolve(__dirname, 'index.html'),
       },
     },
-  }
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  publicDir: 'public',
 }) 
